@@ -1,0 +1,28 @@
+{
+  "type": "module",
+  "name": "homework1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx eslint src/ --fix",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coopslarhette/pls.git"
+  },
+  "author": "@coopslarhette",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coopslarhette/pls/issues"
+  },
+  "homepage": "https://github.com/coopslarhette/pls#readme",
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.2.1",
+    "prettier": "^2.2.1"
+  }
+}
