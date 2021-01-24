@@ -1,47 +1,15 @@
+import { deepStrictEqual, throws } from 'assert'
 import {
-  ok, deepStrictEqual, match, throws, fail,
-} from 'assert'
-
-import {
-  stretched,
-  scramble,
-  say,
-  powers,
-  powersGenerator,
-  topTenScorers,
-  interpret,
-} from '../src/exercises'
+  interpret, powers, say, stretched, topTenScorers,
+} from '../src/exercises.js'
 
 describe('stretched', () => {
-  it('works on the empty string', () => {
-    deepStrictEqual(stretched(''), '')
-  })
-
-  it('stretches non-empty strings property', () => {
-    deepStrictEqual(stretched('H e   l\t\tlo'), 'Heelllllllooooo')
-    deepStrictEqual(stretched('$#'), '$##')
-    deepStrictEqual(stretched('       '), '')
-    deepStrictEqual(stretched('A = πr²'), 'A==πππrrrr²²²²²')
-  })
-})
-
-describe('scramble', () => {
-  function anagramsOfEachOther(s, t) {
-    return s.split('').sort().join('') === t.split('').sort().join('')
-  }
-
-  it('scrambles properly', () => {
-    ['a', 'rat', 'JavaScript testing', '', 'zzz', '^*^*)^▱ÄÈËɡɳɷ'].forEach((s) => {
-      ok(anagramsOfEachOther(s, scramble(s)))
-    })
-  })
-
-  it('is really random (produces all permutations)', () => {
-    const possibilities = new Set('ABC ACB BAC BCA CAB CBA'.split(' '))
-    for (let i = 0; i < 200; i += 1) {
-      possibilities.delete(scramble('ABC'))
-    }
-    deepStrictEqual(possibilities.size, 0)
+  it('stretches okay', () => {
+    deepStrictEqual(stretched([]), [])
+    deepStrictEqual(stretched([1]), [1])
+    deepStrictEqual(stretched([10, 20]), [10, 20, 20])
+    deepStrictEqual(stretched([5, 8, 3, 2]), [5, 8, 8, 3, 3, 3, 2, 2, 2, 2])
+    deepStrictEqual(stretched(['a', 'b']), ['a', 'b', 'b'])
   })
 })
 
@@ -66,28 +34,12 @@ describe('say', () => {
   })
 })
 
-describe('powers', () => {
-  function generatorToArray(generator, ...args) {
-    const result = []
-    generator(...args, (item) => result.push(item))
-    return result
-  }
-
-  it('generates sequences of powers properly', () => {
-    deepStrictEqual(generatorToArray(powers, 2, -5), [])
-    deepStrictEqual(generatorToArray(powers, 7, 0), [])
-    deepStrictEqual(generatorToArray(powers, 3, 1), [1])
-    deepStrictEqual(generatorToArray(powers, 2, 63), [1, 2, 4, 8, 16, 32])
-    deepStrictEqual(generatorToArray(powers, 2, 64), [1, 2, 4, 8, 16, 32, 64])
-  })
-})
-
 describe('The powers generator', () => {
   it('works as expected', () => {
-    const g1 = powersGenerator(2, 1)
+    const g1 = powers(2, 1)
     deepStrictEqual(g1.next(), { value: 1, done: false })
     deepStrictEqual(g1.next(), { value: undefined, done: true })
-    const g2 = powersGenerator(3, 100)
+    const g2 = powers(3, 100)
     deepStrictEqual(g2.next(), { value: 1, done: false })
     deepStrictEqual(g2.next(), { value: 3, done: false })
     deepStrictEqual(g2.next(), { value: 9, done: false })
@@ -182,11 +134,10 @@ describe('The topTenPlayers function', () => {
 
 describe('interpret', () => {
   it('works for a variety of cases', () => {
-    deepStrictEqual(interpret('5'), 5)
-    deepStrictEqual(interpret('3 7 +'), 10)
-    deepStrictEqual(interpret('2 5 * 20 SWAP -'), 10)
-    /*
-     * NOTE: I WILL ADD MORE TEST CASES LATER
-     */
+    deepStrictEqual([...interpret('1')], [])
+    deepStrictEqual([...interpret('3 8 7 + PRINT 10 SWAP - PRINT')], [15, -7])
+    deepStrictEqual([...interpret('99 DUP * PRINT')], [9801])
+    throws(() => [...interpret('2 TIMES SWAP -')], /Illegal Instruction/)
+    throws(() => [...interpret('DUP')], /Not enough operands/)
   })
 })
