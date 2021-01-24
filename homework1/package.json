@@ -1,9 +1,8 @@
 {
-  "type": "module",
   "name": "homework1",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/exercises.js",
   "scripts": {
     "lint": "npx eslint src/ --fix",
     "test": "mocha"
@@ -12,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/coopslarhette/pls.git"
   },
-  "author": "@coopslarhette",
+  "author": "Cooper LaRhette",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/coopslarhette/pls/issues"
@@ -24,5 +23,9 @@
     "eslint-plugin-import": "^2.22.1",
     "mocha": "^8.2.1",
     "prettier": "^2.2.1"
+  },
+  "type": "module",
+  "dependencies": {
+    "esm": "^3.2.25"
   }
 }
