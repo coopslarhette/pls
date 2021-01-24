@@ -1,6 +1,7 @@
 import { deepStrictEqual, throws } from 'assert'
 import {
   interpret, powers, say, stretched, topTenScorers,
+// eslint-disable-next-line import/extensions
 } from '../src/exercises.js'
 
 describe('stretched', () => {
