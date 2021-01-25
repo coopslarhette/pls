@@ -16,7 +16,12 @@ function* powers(base, limit) {
   }
 }
 
-function say() {}
+function say(previous) {
+  if (previous) {
+    return (current) => (current ? say(`${previous} ${current}`) : previous)
+  }
+  return ''
+}
 
 function topTenScorers() {}
 
