@@ -1,9 +1,8 @@
 function stretched(array) {
   const repeat = (el, n, arr) => (n > 0 ? repeat(el, n - 1, [...arr, el]) : arr)
   function recurse(base, n, prev) {
-    const element = base[0]
-    if (base && base.length > 0) {
-      return recurse(base.slice(1), n + 1, [...prev, ...repeat(element, n, [])])
+    if (base?.length > 0) {
+      return recurse(base.slice(1), n + 1, [...prev, ...repeat(base[0], n, [])])
     }
     return prev
   }
