@@ -1,10 +1,10 @@
 export function stretched(array) {
   // const repeat = (el, n, arr) => (n > 0 ? repeat(el, n - 1, [...arr, el]) : arr) hmmm which is better
-  function recurse(base, n, prev) {
-    if (base?.length > 0) {
-      return recurse(base.slice(1), n + 1, [...prev, ...Array(n).fill(base[0])])
+  function recurse(source, n, previous) {
+    if (source?.length > 0) {
+      return recurse(source.slice(1), n + 1, [...previous, ...Array(n).fill(source[0])])
     }
-    return prev
+    return previous
   }
   return recurse(array, 1, [])
 }
