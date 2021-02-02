@@ -40,7 +40,7 @@ export function interpret(program) {
   const oneOperandOperators = ['NEG', 'SQRT', 'PRINT', 'DUP']
   const hasEnoughOperands = (op) => (twoOperandOperators.includes(op) && stack.length >= 2)
     || (oneOperandOperators.includes(op) && stack.length >= 1)
-  const tokens = program.trim().split(' ')
+  const tokens = program.split(/\s+/)
   const ops = {
     NEG: () => stack.push(-1 * stack.pop()),
     SQRT: () => stack.push(Math.sqrt(stack.pop())),
