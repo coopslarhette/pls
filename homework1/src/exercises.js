@@ -33,9 +33,8 @@ export function topTenScorers(teamPlayerStats) {
   )
 }
 
-export function interpret(program) {
+export function* interpret(program) {
   const stack = []
-  const out = []
   const twoOperandOperators = ['SWAP', '+', '-', '*', '/']
   const oneOperandOperators = ['NEG', 'SQRT', 'PRINT', 'DUP']
   const hasEnoughOperands = (op) => (twoOperandOperators.includes(op) && stack.length >= 2)
@@ -46,7 +45,6 @@ export function interpret(program) {
     SQRT: () => stack.push(Math.sqrt(stack.pop())),
     DUP: () => stack.push(stack[stack.length - 1]),
     SWAP: () => stack.push(...stack.splice(stack.length - 2).reverse()),
-    PRINT: () => out.push(stack.pop()),
     '+': () => {
       const [y, x] = stack.splice(stack.length - 2)
       stack.push(x + y)
@@ -66,18 +64,20 @@ export function interpret(program) {
     },
   }
 
-  tokens.forEach((t) => {
-    const number = parseInt(t, 10)
+  for (const t of tokens) {
+    const number = parseFloat(t)
     if (!Number.isNaN(number)) {
       stack.push(number)
-    } else if (t in ops) {
+    } else if (t in ops || t === 'PRINT') {
       if (!hasEnoughOperands(t)) {
         throw Error('Not enough operands')
+      } else if (t === 'PRINT') {
+        yield stack.pop()
+      } else {
+        ops[t]()
       }
-      ops[t]()
     } else {
       throw Error('Illegal Instruction')
     }
-  })
-  return out
+  }
 }
