@@ -64,6 +64,7 @@ export function* interpret(program) {
     },
   }
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const t of tokens) {
     const number = parseFloat(t)
     if (!Number.isNaN(number)) {
