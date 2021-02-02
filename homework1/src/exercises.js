@@ -27,7 +27,7 @@ export function topTenScorers(teamPlayerStats) {
       .flatMap(([team, playerList]) => playerList.map((player) => [...player, team]))
       // eslint-disable-next-line
       .filter(([, games, ,]) => games >= 15)
-      .map((player) => ({ name: player[0], ppg: player[2] / player[1], team: player[3] }))
+      .map(([name, totalPoints, numGames, team]) => ({ name, ppg: numGames / totalPoints, team }))
       .sort(({ ppg: a }, { ppg: b }) => b - a)
       .slice(0, 10)
   )
